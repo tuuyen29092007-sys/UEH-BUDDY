@@ -1,0 +1,314 @@
+const knowledge = [
+
+    {
+        keywords: [
+            "đăng ký học phần",
+            "đăng kí học phần",
+            "đăng ký môn"
+        ],
+
+        answer: `
+        <strong>📚 Đăng ký học phần</strong>
+
+        <br><br>
+
+        Để đăng ký học phần, sinh viên cần kiểm tra
+        thông báo đăng ký học phần của UEH dành cho
+        học kỳ hiện tại.
+
+        <br><br>
+
+        <strong>Việc cần làm:</strong>
+
+        <br>
+
+        1. Kiểm tra thời gian đăng ký.<br>
+        2. Kiểm tra điều kiện học phần.<br>
+        3. Chọn nhóm lớp phù hợp.<br>
+        4. Xác nhận đăng ký.
+
+        <br><br>
+
+        ⚠️ Thời gian đăng ký có thể thay đổi theo từng
+        học kỳ. Hãy ưu tiên thông báo mới nhất của UEH.
+
+        <br><br>
+
+        <small>📌 Nguồn: Thông báo học vụ UEH</small>
+        `
+    },
+
+
+    {
+        keywords: [
+            "lịch học",
+            "thời khóa biểu",
+            "tkb"
+        ],
+
+        answer: `
+        <strong>🗓️ Lịch học</strong>
+
+        <br><br>
+
+        Bạn nên kiểm tra thời khóa biểu trên hệ thống
+        thông tin sinh viên do UEH cung cấp.
+
+        <br><br>
+
+        Khi kiểm tra, hãy chú ý:
+
+        <br>
+
+        • Mã học phần<br>
+        • Nhóm lớp<br>
+        • Phòng học<br>
+        • Thời gian học
+
+        <br><br>
+
+        Nếu lịch học có thay đổi, hãy kiểm tra
+        thông báo mới nhất.
+
+        <br><br>
+
+        <small>📌 Nguồn: Hệ thống thông tin sinh viên UEH</small>
+        `
+    },
+
+
+    {
+        keywords: [
+            "học phí",
+            "đóng học phí",
+            "tiền học"
+        ],
+
+        answer: `
+        <strong>💰 Học phí</strong>
+
+        <br><br>
+
+        Mức học phí phụ thuộc vào chương trình đào tạo,
+        học phần và từng học kỳ.
+
+        <br><br>
+
+        Vì vậy, Study Buddy không nên sử dụng một
+        mức học phí cố định cho tất cả sinh viên K52.
+
+        <br><br>
+
+        Bạn nên kiểm tra thông báo học phí chính thức
+        của UEH trong học kỳ hiện tại.
+
+        <br><br>
+
+        <small>📌 Nguồn: Thông báo học phí UEH</small>
+        `
+    },
+
+
+    {
+        keywords: [
+            "quy chế",
+            "quy định học tập"
+        ],
+
+        answer: `
+        <strong>📖 Quy chế học tập</strong>
+
+        <br><br>
+
+        Quy chế học tập có thể liên quan đến:
+
+        <br>
+
+        • Đăng ký học phần<br>
+        • Đánh giá học phần<br>
+        • Thi kết thúc học phần<br>
+        • Học lại<br>
+        • Cải thiện điểm<br>
+        • Cảnh báo học tập
+
+        <br><br>
+
+        Với vấn đề cụ thể, Study Buddy nên dẫn
+        bạn đến đúng văn bản UEH.
+
+        <br><br>
+
+        <small>📌 Nguồn: Quy chế đào tạo UEH</small>
+        `
+    }
+
+];
+
+
+function findAnswer(question) {
+
+    const text =
+        question.toLowerCase();
+
+    for (const item of knowledge) {
+
+        for (const keyword of item.keywords) {
+
+            if (text.includes(keyword)) {
+
+                return item.answer;
+
+            }
+
+        }
+
+    }
+
+
+    return `
+
+        Mình chưa tìm thấy câu trả lời phù hợp
+        trong kho kiến thức hiện tại.
+
+        <br><br>
+
+        🔎 Để đảm bảo chính xác, bạn nên kiểm tra
+        nguồn thông tin chính thức của UEH.
+
+        <br><br>
+
+        Trong phiên bản hoàn chỉnh, mình sẽ sử dụng
+        AI + cơ sở dữ liệu UEH để tìm đúng văn bản
+        liên quan và cung cấp nguồn.
+
+    `;
+
+}
+
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("question");
+
+    const question =
+        input.value.trim();
+
+    if (!question) return;
+
+
+    addUserMessage(question);
+
+    input.value = "";
+
+
+    setTimeout(() => {
+
+        const answer =
+            findAnswer(question);
+
+        addBotMessage(answer);
+
+    }, 500);
+
+}
+
+
+function ask(question) {
+
+    document.getElementById("question")
+        .value = question;
+
+    sendMessage();
+
+}
+
+
+function handleEnter(event) {
+
+    if (event.key === "Enter") {
+
+        sendMessage();
+
+    }
+
+}
+
+
+function addUserMessage(text) {
+
+    const chat =
+        document.getElementById("chatBody");
+
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message user";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+
+    bubble.textContent =
+        text;
+
+
+    message.appendChild(bubble);
+
+    chat.appendChild(message);
+
+
+    scrollChat();
+
+}
+
+
+function addBotMessage(text) {
+
+    const chat =
+        document.getElementById("chatBody");
+
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message bot";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+
+    bubble.innerHTML =
+        text;
+
+
+    message.appendChild(bubble);
+
+    chat.appendChild(message);
+
+
+    scrollChat();
+
+}
+
+
+function scrollChat() {
+
+    const chat =
+        document.getElementById("chatBody");
+
+    chat.scrollTop =
+        chat.scrollHeight;
+
+}
